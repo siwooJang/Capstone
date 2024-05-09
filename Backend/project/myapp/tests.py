@@ -140,7 +140,7 @@ class DiaryReadTest(APITestCase,UserAuthencateMixin):
                 title=f'{ord}번째 일기',
                 content=f'{ord}번째 일기의 내용이다.\n아직 긴 내용을 테스트해보지는 않았다.\n혹시 모르니 중간에 다른 부분도 넣는다.\n{ord*4}\n',
                 writer=self.user,
-                emotion={}
+#                emotion={}
             )
             for ord in ordinal
         ])

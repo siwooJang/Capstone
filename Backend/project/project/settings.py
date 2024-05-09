@@ -17,12 +17,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 import os
 import json
-if 'DJANGO_DOTENV_PATH' in os.environ:
+
+config={}
+try:
+    import dotenv
     try:
-        import dotenv
-        dotenv.load_dotenv(os.environ('DJANGO_DOTENV_PATH'))
+        config.update(dotenv.dotenv_values('.env'))
     except Exception:
         pass
+    config.update(dotenv.dotenv_values('.env.secret'))
+except Exception:
+    pass
+
+config.update(os.environ)
+
 
 #with open(os.environ['DJANGO_SETTING_FILE'],encoding='utf8') as f:
 #    SETTING_JSON=json.load(f)
@@ -31,30 +39,32 @@ if 'DJANGO_DOTENV_PATH' in os.environ:
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY=os.environ['SECRET_KEY'] #SETTING_JSON['SECRET_KEY']
+SECRET_KEY=config['SECRET_KEY'] #SETTING_JSON['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = bool(os.environ.get("DEBUG",False))
+DEBUG = bool(config.get("DEBUG",False))
 
-ALLOWED_HOSTS = json.loads(os.environ.get('ALLOWED_HOSTS','[]'))
+if 'ALLOWED_HOSTS' in config:
+    ALLOWED_HOSTS =config['ALLOWED_HOSTS'].split(';')
 
 # Application definition
 
-_options=json.loads(os.environ['DB_OPTION'])
+#_options=json.loads(os.environ['DB_OPTION'])
 
 DB_DEFAULT={
     "ENGINE":"django.db.backends.mysql",
-    'NAME': os.environ['DB_NAME'],
-    'USER': os.environ['DB_USER'],
-    'PASSWORD': os.environ['DB_PASSWORD'],
-    'HOST': os.environ['DB_HOST'],
-    'PORT': os.environ['DB_PORT'],
+    'NAME': config['DB_NAME'],
+    'USER': config['DB_USER'],
+    'PASSWORD': config['DB_PASSWORD'],
+    'HOST': config['DB_HOST'],
+    'PORT': config['DB_PORT'],
     'OPTIONS':{
         'charset':'utf8mb4',
     }
 }
-del _options
+
+#del _options
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -137,7 +147,6 @@ WSGI_APPLICATION = "project.wsgi.application"
 DATABASES = {
     "default": DB_DEFAULT
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
