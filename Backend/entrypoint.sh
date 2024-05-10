@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# wait for DB
+while ! nc -z ${MYSQL_HOST} ${MYSQL_PORT}; do sleep 1; done
 # Run Django database migrations
 python manage.py migrate
 
