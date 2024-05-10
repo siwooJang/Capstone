@@ -6,7 +6,9 @@ services:
       context: ./Backend
     ports:
       - 8000:8000
-    # restart: unless-stopped
+    depends_on: 
+      - mysql
+    restart: unless-stopped
     env_file:
       - .env
     logging:
@@ -21,7 +23,7 @@ services:
       - .env
     volumes:
       - mysql-data:/var/lib/mysql
-    # restart: unless-stopped
+    restart: unless-stopped
 
 volumes:
   mysql-data:

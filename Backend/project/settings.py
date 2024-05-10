@@ -19,7 +19,7 @@ import os
 import json
 import dotenv
 
-dotenv.load_dotenv()
+# dotenv.load_dotenv()
 
 #with open(os.environ['DJANGO_SETTING_FILE'],encoding='utf8') as f:
 #    SETTING_JSON=json.load(f)
@@ -32,7 +32,7 @@ SECRET_KEY=os.getenv('DJANGO_SECRET_KEY') #SETTING_JSON['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = bool(os.getenv("DEBUG",False))
+DEBUG = int(os.getenv("DEBUG",False))
 
 ALLOWED_HOSTS = (os.getenv('ALLOWED_HOSTS').split(';') if os.getenv('ALLOWED_HOSTS') else [])
 
