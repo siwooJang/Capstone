@@ -6,10 +6,7 @@ services:
       context: ./Backend
     ports:
       - 8000:8000
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: "diary"
-      MYSQL_USER: "dbuser"
+    # restart: unless-stopped
     env_file:
       - .env
     logging:
@@ -19,13 +16,13 @@ services:
         max-size: "50m"
 
   mysql:
-    image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
+    image: mysql
     env_file:
       - .env
     volumes:
-      - mysqldb:/var/lib/mysql
-    restart: unless-stopped
+      - mysql-data:/var/lib/mysql
+    # restart: unless-stopped
 
-  volumes:
-    mysqldb:
+volumes:
+  mysql-data:
+    driver: local

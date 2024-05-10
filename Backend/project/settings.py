@@ -17,20 +17,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 import os
 import json
+import dotenv
 
-config={}
-try:
-    import dotenv
-    try:
-        config.update(dotenv.dotenv_values('.env'))
-    except Exception:
-        pass
-    config.update(dotenv.dotenv_values('.env.secret'))
-except Exception:
-    pass
-
-config.update(os.environ)
-
+dotenv.load_dotenv()
 
 #with open(os.environ['DJANGO_SETTING_FILE'],encoding='utf8') as f:
 #    SETTING_JSON=json.load(f)
@@ -39,26 +28,23 @@ config.update(os.environ)
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY=config['DJANGO_SECRET_KEY'] #SETTING_JSON['SECRET_KEY']
+SECRET_KEY=os.getenv('DJANGO_SECRET_KEY') #SETTING_JSON['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = bool(config.get("DEBUG",False))
+DEBUG = bool(os.getenv("DEBUG",False))
 
-if 'ALLOWED_HOSTS' in config:
-    ALLOWED_HOSTS =config['ALLOWED_HOSTS'].split(';')
+ALLOWED_HOSTS = (os.getenv('ALLOWED_HOSTS').split(';') if os.getenv('ALLOWED_HOSTS') else [])
 
 # Application definition
 
-#_options=json.loads(os.environ['DB_OPTION'])
-
 DB_DEFAULT={
     "ENGINE":"django.db.backends.mysql",
-    'NAME': config['DB_NAME'],
-    'USER': config['DB_USER'],
-    'PASSWORD': config['DB_PASSWORD'],
-    'HOST': 'mysql',
-    'PORT': config['DB_PORT'],
+    'NAME': os.environ['MYSQL_DATABASE'],
+    'USER': os.environ['MYSQL_USER'],
+    'PASSWORD': os.environ['MYSQL_PASSWORD'],
+    'HOST': os.environ['MYSQL_HOST'],
+    'PORT': os.environ['MYSQL_PORT'],
     'OPTIONS':{
         'charset':'utf8mb4',
     }

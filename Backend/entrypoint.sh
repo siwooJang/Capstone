@@ -4,4 +4,4 @@
 python manage.py migrate
 
 # Start Gunicorn server
-exec gunicorn -w 2 project.wsgi:application
+exec gunicorn -w 2 -b 0.0.0.0:8000 project.wsgi:application

@@ -1,4 +1,4 @@
-FROM python:3.12
+FROM python:3.12-slim
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -19,4 +19,4 @@ RUN groupadd appuser && useradd -g appuser -m appuser
 USER appuser
 
 EXPOSE 8000
-ENTRYPOINT entrypoint.sh
+ENTRYPOINT /app/entrypoint.sh
