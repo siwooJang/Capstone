@@ -9,11 +9,8 @@ router.register('diary/emotion',DiaryEmotionViewset,basename='diary-emotion')
 router.register('diary',DiaryViewset,basename='diary')
 
 from .schema.urls import urlpatterns as schema_urls
-from .token.urls import urlpatterns as token_urls
-
 
 urlpatterns=[
-    path('token/',include(token_urls)),
     path('schema/',include(schema_urls)),
     path('',include(router.urls)),
 ]
