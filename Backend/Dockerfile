@@ -15,8 +15,6 @@ RUN pip install -r requirement.txt --no-cache-dir
 COPY . /app
 RUN chmod +x entrypoint.sh
 
-RUN pip install -r requirement.txt --no-cache-dir
-
 # use unpriviledged container
 RUN groupadd appuser && useradd -g appuser -m appuser
 USER appuser
