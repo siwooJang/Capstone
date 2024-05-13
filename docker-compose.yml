@@ -31,16 +31,16 @@ services:
     networks:
       - app_network
 
-  # flask:
-  #   build:
-  #     context: ./AI-Emotion-Detection
-  #   volumes:
-  #     - ./AI-Emotion-Detection/src:/app
-  #     - ./AI-Emotion-Detection/model:/app/model
-  #   ports:
-  #     - "5000:5000"
-  #   networks:
-  #     - app_network
+  flask:
+    build:
+      context: ./AI-Emotion-Detection
+    volumes:
+      - ./AI-Emotion-Detection/src:/app
+      - ./AI-Emotion-Detection/model:/app/model
+    ports:
+      - "5000:5000"
+    networks:
+      - app_network
 
 volumes:
   mysql-data:
