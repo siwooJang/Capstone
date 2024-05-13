@@ -22,7 +22,7 @@ class DiaryDetailSerializer(serializers.ModelSerializer):
 class DiaryEmotionSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.DiaryEmotion
-        fields=['diary','anger','sadness','anxiety','hurt','panic','happyness']
+        fields=['diary','anger','sadness','anxiety','hurt','panic','happiness']
         extra_kwargs = {
                 'diary': {'write_only': True}
         }

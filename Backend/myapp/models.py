@@ -33,4 +33,4 @@ class DiaryEmotion(models.Model):
     anxiety=models.FloatField()
     hurt=models.FloatField()
     panic=models.FloatField()
-    happyness=models.FloatField()
+    happiness=models.FloatField()

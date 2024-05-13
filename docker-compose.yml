@@ -16,6 +16,10 @@ services:
       options:
         max-file: "2"
         max-size: "50m"
+    networks:
+      - app_network
+    volumes:
+      - ./Backend:/app
 
   mysql:
     image: mysql
@@ -24,7 +28,24 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     restart: unless-stopped
+    networks:
+      - app_network
+
+  # flask:
+  #   build:
+  #     context: ./AI-Emotion-Detection
+  #   volumes:
+  #     - ./AI-Emotion-Detection/src:/app
+  #     - ./AI-Emotion-Detection/model:/app/model
+  #   ports:
+  #     - "5000:5000"
+  #   networks:
+  #     - app_network
 
 volumes:
   mysql-data:
     driver: local
+
+networks:
+  app_network:
+    driver: bridge
