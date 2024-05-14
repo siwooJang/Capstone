@@ -16,11 +16,30 @@ pred_config = argparse.Namespace(
     no_cuda=True
 )
 
-def process_data(text, callback_url):
-    result = predict(text)
+# emotion = {
+#     '분노': 0,
+#     '슬픔': 1,
+#     '불안': 2,
+#     '상처': 3,
+#     '당황': 4,
+#     '기쁨': 5
+# }
+
+def process_data(text, diary):
+    result = predict(text, pred_config)
+    
+    post_data = {
+        'diary': diary,
+        'anger': result[0],
+        'sadness': result[1],
+        'anxiety': result[2],
+        'hurt': result[3],
+        'panic': result[4],
+        'happiness': result[5]
+    }
     
     # TODO test connection
-    requests.post('http://backend:8000/api/diary/emotion', json={""})
+    requests.post('http://backend:8000/api/diary/emotion/', json=post_data)
 
 @app.route('/receive', methods=['POST'])
 def receive_data():
@@ -29,7 +48,7 @@ def receive_data():
     diary = data.get('diary', '')
 
     # Start the processing in a background thread
-    thread = threading.Thread(target=process_data, args=(text))
+    thread = threading.Thread(target=process_data, args=(text, diary))
     thread.start()
     
     # Immediately respond that the request has been received

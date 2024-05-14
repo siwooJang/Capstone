@@ -6,7 +6,7 @@ import http.client
 def send_diary(diary:int,content:str):
     data={'diary':diary,'content':content}
     con=http.client.HTTPConnection(settings.AI_HOST,settings.AI_PORT)
-    con.request('POST','/recive',
+    con.request('POST','/receive',
                      headers={'Content-Type':'application/json'},
                      body=json.dumps(data)
                      )

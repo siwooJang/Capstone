@@ -203,7 +203,7 @@ def predict(text, pred_config):
 
     # Return output
     # TODO Process preds as neccesary
-    return preds
+    return preds.mean(axis=0).astype(float)
     
 
 if __name__ == "__main__":
