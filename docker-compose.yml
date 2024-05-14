@@ -41,6 +41,43 @@ services:
       - "5000:5000"
     networks:
       - app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "50m"
+
+  frontend:
+    build:
+      context: ./Frontend
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    env_file:
+      - .env
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "50m"
+    networks:
+      - app_network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+    networks:
+      - app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "50m"
 
 volumes:
   mysql-data:
