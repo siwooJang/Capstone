@@ -3,8 +3,8 @@ import json
 
 import http.client
 
-def send_diary(title:str,content:str):
-    data={'title':title,'content':content}
+def send_diary(diary:int,content:str):
+    data={'diary':diary,'content':content}
     con=http.client.HTTPConnection(settings.AI_HOST,settings.AI_PORT)
     con.request('POST','/recive',
                      headers={'Content-Type':'application/json'},

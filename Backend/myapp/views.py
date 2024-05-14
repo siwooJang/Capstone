@@ -19,16 +19,19 @@ class DiaryViewset(mixins.CreateModelMixin,mixins.DestroyModelMixin,viewsets.Rea
         return Diary.objects.filter(writer=self.request.user) 
 
     def perform_create(self, serializer:serializer_class):
-        aiapi.send_diary(title=serializer.validated_data['title'],
-                         content=serializer.validated_data['content'])
-        serializer.save(writer=self.request.user)
+        
+        diary=serializer.save(writer=self.request.user)
+        try:
+            aiapi.send_diary(diary=diary.id,
+                         content=diary.content)
+        except:
+            diary.delete()
 
 class DiaryDetailViewset(viewsets.ReadOnlyModelViewSet):
     serializer_class=serializers.DiaryDetailSerializer
     queryset=Diary
     def get_queryset(self):
         return Diary.objects.filter(writer=self.request.user)
-
 
 class DiaryEmotionViewset(mixins.CreateModelMixin,mixins.RetrieveModelMixin,viewsets.GenericViewSet):
     permission_classes=[DiaryEmotionPermission]
