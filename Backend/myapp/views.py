@@ -26,6 +26,7 @@ class DiaryViewset(mixins.CreateModelMixin,mixins.DestroyModelMixin,viewsets.Rea
                          content=diary.content)
         except:
             diary.delete()
+            raise
 
 class DiaryDetailViewset(viewsets.ReadOnlyModelViewSet):
     serializer_class=serializers.DiaryDetailSerializer
