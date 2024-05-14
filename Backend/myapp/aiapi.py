@@ -12,4 +12,4 @@ def send_diary(diary:int,content:str):
                      )
     resp=con.getresponse()
     if resp.status!=200:
-        raise Exception('could not request emotion analyzation')
+        raise Exception(f'could not request emotion analyzation with status:{resp.status}')
