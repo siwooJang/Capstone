@@ -41,22 +41,22 @@ export default function HeaderLinks(props) {
 
       <ListItem className={classes.listItem}>
         <Button
-          href="/profile"
+          href="/mypage"
           color="transparent"
           target="_self"
           className={classes.navLink}
         >
-          <Icon className={classes.icons}>unarchive</Icon> 프로필
+          <Icon className={classes.icons}>unarchive</Icon> 일기 목록
         </Button>
       </ListItem>
       <ListItem className={classes.listItem}>
         <Button
-          href="/components"
+          href="/chatbot"
           color="transparent"
           target="_self"
           className={classes.navLink}
         >
-          <CloudDownload className={classes.icons} /> 그래프
+          <CloudDownload className={classes.icons} /> 챗봇
         </Button>
       </ListItem>
       <ListItem className={classes.listItem}>
@@ -66,18 +66,18 @@ export default function HeaderLinks(props) {
           </IconButton>
         </Tooltip>*/}
         <Tooltip
-          id="instagram-twitter"
+          id="github-link"
           title="Github Link"
           placement={"top"}
           classes={{ tooltip: classes.tooltip }}
         >
           <Button
-            href="https://github.com"
+            href="https://github.com/ScobraCK/Capstone"
             target="_blank"
             color="transparent"
             className={classes.navLink}
           >
-            <i className={classes.socialIcons + " fab fa-twitter"} />
+            <i className={classes.socialIcons + " fab fa-github"} />
           </Button>
         </Tooltip>
       </ListItem>

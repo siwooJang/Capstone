@@ -27,7 +27,8 @@ export default function TeamSection() {
   );
   return (
     <div className={classes.section}>
-      <h2 className={classes.title}>Here is our team</h2>
+      <h2 className={classes.title}>Here is our Team</h2>
+      <br/><br/>
       <div>
         <GridContainer>
           <GridItem xs={12} sm={12} md={4}>
@@ -35,6 +36,7 @@ export default function TeamSection() {
               <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
                 <img
                   // src="/img/faces/avatar.jpg"
+                  src="https://i.postimg.cc/QtmLtsNp/image.jpg"
                   alt="..."
                   className={imageClasses}
                 />
@@ -42,37 +44,22 @@ export default function TeamSection() {
               <h4 className={classes.cardTitle}>
                 강인창
                 <br />
-                <small className={classes.smallTitle}>Model</small>
+                <small className={classes.smallTitle}>AI</small>
               </h4>
               <CardBody>
                 <p className={classes.description}>
-                  You can write here details about one of your team members. You
-                  can give more details about what they do. Feel free to add
-                  some <a href="#pablo">links</a> for people to be able to
-                  follow them outside the site.
+                프로젝트 팀장을 맡았습니다. <br/>
+                감정 분석 AI를 위한 데이터 수집 및 학습을 진행 및 전체적인 서버 구축을 했습니다.
                 </p>
               </CardBody>
               <CardFooter className={classes.justifyCenter}>
-                <Button
+              <Button
                   justIcon
                   color="transparent"
                   className={classes.margin5}
+                  href="https://github.com/ScobraCK"
                 >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-instagram"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-facebook"} />
+                  <i className={classes.socials + " fab fa-github"} />
                 </Button>
               </CardFooter>
             </Card>
@@ -82,6 +69,7 @@ export default function TeamSection() {
               <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
                 <img
                   // src="/img/faces/christian.jpg"
+                  src="https://i.postimg.cc/QtmLtsNp/image.jpg"
                   alt="..."
                   className={imageClasses}
                 />
@@ -89,14 +77,11 @@ export default function TeamSection() {
               <h4 className={classes.cardTitle}>
                 김태원
                 <br />
-                <small className={classes.smallTitle}>Designer</small>
+                <small className={classes.smallTitle}>BackEnd</small>
               </h4>
               <CardBody>
                 <p className={classes.description}>
-                  You can write here details about one of your team members. You
-                  can give more details about what they do. Feel free to add
-                  some <a href="#pablo">links</a> for people to be able to
-                  follow them outside the site.
+                DRF를 통해 REST API를 제작하고 <br/>프로젝트에 사용될 DB 구조를 <br/>설계 및 MySQL로 구축했습니다.
                 </p>
               </CardBody>
               <CardFooter className={classes.justifyCenter}>
@@ -104,15 +89,9 @@ export default function TeamSection() {
                   justIcon
                   color="transparent"
                   className={classes.margin5}
+                  href="https://github.com/UserKimTaewon"
                 >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-linkedin"} />
+                  <i className={classes.socials + " fab fa-github"} />
                 </Button>
               </CardFooter>
             </Card>
@@ -122,6 +101,7 @@ export default function TeamSection() {
               <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
                 <img
                   // src="/img/faces/kendall.jpg"
+                  src="https://i.postimg.cc/QtmLtsNp/image.jpg"
                   alt="..."
                   className={imageClasses}
                 />
@@ -129,42 +109,28 @@ export default function TeamSection() {
               <h4 className={classes.cardTitle}>
                 장시우
                 <br />
-                <small className={classes.smallTitle}>Model</small>
+                <small className={classes.smallTitle}>FrontEnd</small>
               </h4>
               <CardBody>
                 <p className={classes.description}>
-                  You can write here details about one of your team members. You
-                  can give more details about what they do. Feel free to add
-                  some <a href="#pablo">links</a> for people to be able to
-                  follow them outside the site.
+                  웹사이트를 디자인,구성하고 <br/>백엔드,AI와 연동작업을 진행했습니다. <br/>
+                  컴포넌트 UI 디자인 및 챗봇을 구축했습니다.
                 </p>
               </CardBody>
               <CardFooter className={classes.justifyCenter}>
-                <Button
+              <Button
                   justIcon
                   color="transparent"
                   className={classes.margin5}
+                  href="https://github.com/siwooJang"
                 >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-instagram"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-facebook"} />
+                  <i className={classes.socials + " fab fa-github"} />
                 </Button>
               </CardFooter>
             </Card>
           </GridItem>
         </GridContainer>
+        
       </div>
     </div>
   );

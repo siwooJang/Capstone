@@ -34,7 +34,7 @@ export default function LandingPage(props) {
       <Header
         color="transparent"
         routes={dashboardRoutes}
-        brand="AI DIARY"
+        brand="Deer AI Diary"
         rightLinks={<HeaderLinks />}
         fixed
         changeColorOnScroll={{
@@ -47,10 +47,10 @@ export default function LandingPage(props) {
         <div className={classes.container}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-              <h1 className={classes.title}>당신의 심리상담 일기 AI 다이어리</h1>
+              <h1 className={classes.title}>당신의 심리상담 일기 Deer AI 다이어리</h1>
               <h4>
                 일상을 살아가다 보면, 가끔 지치고 힘들 때가 있습니다.<br/>
-                그럴때 AI 다이어리 서비스를 이용해 보세요<br/>
+                저희 Deer AI 다이어리 서비스를 이용해 보세요<br/>
                 당신이 쓴 일기의 심리를 분석해 주고<br/>
                 맞춤형 상담을 제공해드립니다<br/>
               </h4>
@@ -58,8 +58,7 @@ export default function LandingPage(props) {
               <Button
                 color="danger"
                 size="lg"
-                href="./profile"
-                target="_blank"
+                href="./mypage"
               >
                 
                 시작해보세요!
