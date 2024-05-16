@@ -22,3 +22,15 @@ TODO add workflow file and add explanation
 
 ### Docker Compose
 TODO add compose file and explanation
+
+### Deal with secrets
+실제 production에서는
+
+`.env.mysql.secret` 에 새로운 root password를,
+
+`.env.mysql.shared.secret`에 새로운 user password를.
+
+`env.backend.secret`에는,
+DEBUG=False와,
+적절한 secret_key 값과,
+실제 서버의 이름을 allowed_hosts에 추가해야 한다.
