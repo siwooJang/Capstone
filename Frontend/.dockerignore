@@ -1,5 +1,6 @@
 Dockerfile
 .dockerignore
+README.md
 Webpage/node_modules
 Webpage/npm-debug.log
 Webpage/.next
