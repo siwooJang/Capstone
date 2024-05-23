@@ -12,9 +12,6 @@ Webpage/coverage
 Webpage/build
 Webpage/out
 
-
-Webpage/package-lock.json
-
 Webpage/npm-debug.log*
 Webpage/yarn-debug.log*
 Webpage/yarn-error.log*

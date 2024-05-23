@@ -4,8 +4,9 @@ WORKDIR /app
 
 COPY ./Webpage/.npmrc /app/.npmrc
 COPY ./Webpage/package.json /app/package.json
+COPY ./Webpage/package-lock.json /app/package-lock.json
 
-RUN npm install
+RUN npm ci
 
 COPY ./Webpage /app
 
