@@ -7,7 +7,7 @@ import torch
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from transformers import AdamW, get_linear_schedule_with_warmup
 
-from utils import compute_metrics, get_label, MODEL_CLASSES
+from utils import compute_metrics, get_label, MODEL_CLASSES, show_report
 
 logger = logging.getLogger(__name__)
 
@@ -164,12 +164,14 @@ class Trainer(object):
         }
 
         preds = np.argmax(preds, axis=1)
-        result = compute_metrics(preds, out_label_ids)
+
+        result = compute_metrics(out_label_ids, preds)
         results.update(result)
 
         logger.info("***** Eval results *****")
         for key in sorted(results.keys()):
             logger.info("  %s = %s", key, str(results[key]))
+        logger.info("\n" + show_report(out_label_ids, preds))
 
         return results
 

@@ -26,10 +26,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--task", default="conv", type=str, help="The name of the task to train")
-    parser.add_argument("--model_dir", default="./model", type=str, help="Path to save, load model")
+    parser.add_argument("--model_dir", default="../model", type=str, help="Path to save, load model")
     parser.add_argument("--data_dir", default="./data", type=str, help="The input data dir")
-    parser.add_argument("--train_file", default="training.csv", type=str, help="Train file")
-    parser.add_argument("--test_file", default="validation.csv", type=str, help="Test file")
+    parser.add_argument("--train_file", default="train.csv", type=str, help="Train file")
+    parser.add_argument("--test_file", default="test.csv", type=str, help="Test file")
 
     parser.add_argument("--model_type", default="kobert", type=str, help="Model type selected in the list: " + ", ".join(MODEL_CLASSES.keys()))
 
@@ -47,8 +47,8 @@ if __name__ == '__main__':
     parser.add_argument("--max_steps", default=-1, type=int, help="If > 0: set total number of training steps to perform. Override num_train_epochs.")
     parser.add_argument("--warmup_steps", default=0, type=int, help="Linear warmup over warmup_steps.")
 
-    parser.add_argument('--logging_steps', type=int, default=2000, help="Log every X updates steps.")
-    parser.add_argument('--save_steps', type=int, default=2000, help="Save checkpoint every X updates steps.")
+    parser.add_argument('--logging_steps', type=int, default=1000, help="Log every X updates steps.")
+    parser.add_argument('--save_steps', type=int, default=1000, help="Save checkpoint every X updates steps.")
 
     parser.add_argument("--do_train", action="store_true", help="Whether to run training.")
     parser.add_argument("--do_eval", action="store_true", help="Whether to run eval on the test set.")

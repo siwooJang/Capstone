@@ -6,7 +6,7 @@ import csv
 
 import torch
 from torch.utils.data import TensorDataset
-
+from utils import label2id
 
 logger = logging.getLogger(__name__)
 
@@ -63,19 +63,11 @@ class InputFeatures(object):
         return json.dumps(self.to_dict(), indent=2, sort_keys=True) + "\n"
 
 
-class ConvProcessor(object):
-    """Processor for the AiHub 감성대화 data set """
+class MyProcessor(object):
+    """Processor for the data set"""
 
     def __init__(self, args):
         self.args = args
-        self.emotion = {
-            '분노': 0,
-            '슬픔': 1,
-            '불안': 2,
-            '상처': 3,
-            '당황': 4,
-            '기쁨': 5
-        }
 
     @classmethod
     def _read_file(cls, input_file, quotechar='"'):
@@ -92,8 +84,8 @@ class ConvProcessor(object):
         examples = []
         for (i, line) in enumerate(lines[1:]):
             guid = "%s-%s" % ('test', i)
-            text_a = line[-6].strip()
-            label = self.emotion[line[5]]
+            text_a = line[1].strip()
+            label = label2id[line[0]]
             if i % 1000 == 0:
                 logger.info(line)
             examples.append(InputExample(guid=guid, text_a=text_a, label=label))
@@ -117,7 +109,7 @@ class ConvProcessor(object):
 
 
 processors = {
-    "conv": ConvProcessor,
+    "conv": MyProcessor,
 }
 
 
