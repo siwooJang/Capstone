@@ -1,21 +1,13 @@
 services:
   backend:
-    # image: $BACKEND_IMAGE
-    # for local testing
     build:
       context: ./Backend
-    # ports:
-    #   - 8000:8000
     depends_on: 
       - mysql
     restart: unless-stopped
     env_file:
       - .env.backend
       - .env.mysql.shared
-      - path: .env.mysql.shared.secret
-        required: false
-      - path: .env.backend.secret
-        required: false
     logging:
       driver: "json-file"
       options:
@@ -33,10 +25,6 @@ services:
     env_file:
       - .env.mysql.shared
       - .env.mysql
-      - path: .env.mysql.shared.secret
-        required: false
-      - path: .env.mysql.secret
-        required: false
     volumes:
       - mysql-data:/var/lib/mysql
     restart: unless-stopped
@@ -49,8 +37,6 @@ services:
     volumes:
       - ./AI-Emotion-Detection/src:/app
       - ./AI-Emotion-Detection/model:/app/model
-    # ports:
-    #   - "5000:5000"
     networks:
       - app_network
     logging:
@@ -62,8 +48,6 @@ services:
   frontend:
     build:
       context: ./Frontend
-    # ports:
-    #   - 3000:3000
     restart: unless-stopped
     logging:
       driver: "json-file"
