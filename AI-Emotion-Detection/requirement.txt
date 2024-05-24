@@ -5,3 +5,4 @@ sentencepiece
 flask
 requests
 gunicorn
+scikit-learn
