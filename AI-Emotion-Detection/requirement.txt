@@ -1,0 +1,8 @@
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch==2.3.0+cpu
+transformers==4.32.0
+sentencepiece
+flask
+requests
+gunicorn
+scikit-learn

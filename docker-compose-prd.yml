@@ -1,0 +1,83 @@
+services:
+  backend:
+    build:
+      context: ./Backend
+    depends_on: 
+      - mysql
+    restart: unless-stopped
+    env_file:
+      - .env.backend
+      - .env.mysql.shared
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "50m"
+    networks:
+      - app_network
+    volumes:
+      - ./Backend:/app
+
+  mysql:
+    image: mysql
+    environment:
+      - TZ=Asia/Seoul
+    env_file:
+      - .env.mysql.shared
+      - .env.mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - app_network
+
+  flask:
+    build:
+      context: ./AI-Emotion-Detection
+    volumes:
+      - ./AI-Emotion-Detection/src:/app
+      - ./AI-Emotion-Detection/model:/app/model
+    networks:
+      - app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "50m"
+
+  frontend:
+    build:
+      context: ./Frontend
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "50m"
+    networks:
+      - app_network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx-prd.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    networks:
+      - app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "50m"
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge

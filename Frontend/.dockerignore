@@ -1,0 +1,21 @@
+Dockerfile
+.dockerignore
+README.md
+Webpage/node_modules
+Webpage/npm-debug.log
+Webpage/.next
+
+# testing
+Webpage/coverage
+
+# production
+Webpage/build
+Webpage/out
+
+Webpage/npm-debug.log*
+Webpage/yarn-debug.log*
+Webpage/yarn-error.log*
+
+# package
+Webpage/dist
+Webpage/pnpm-lock.yaml
