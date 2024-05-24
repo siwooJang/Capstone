@@ -2,8 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axiosInstance from "./axiosInstance";
 import { useRouter } from "next/router";
-import { useDispatch } from 'react-redux';
-import { loginSuccess } from './slices/authSlice';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -27,32 +25,28 @@ import styles from "/styles/jss/nextjs-material-kit/pages/loginPage.js";
 
 const useStyles = makeStyles(styles);
 
-export default function LoginPage(props) {
+export default function RegisterPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     try {
-      const response = await axiosInstance.post("/user/", {
+      const response = await axiosInstance.post("/user/signup/", {
         username: data.name,
         password: data.password
       });
 
-      if (response.status === 200) {
-        const { access, refresh } = response.data;
-        sessionStorage.setItem("accessToken", access);
-        sessionStorage.setItem("refreshToken", refresh);
-        dispatch(loginSuccess({ username: data.name }));
-        router.push('/chatbot'); // Redirect to chatbot or any protected route
+      if (response.status === 201) {
+        console.log('Registration successful, redirect to login page');
+        router.push("/login");
       } else {
-        console.error("Login failed");
+        console.error("Registration failed");
       }
     } catch (error) {
-      console.error("Error occurred during login", error);
+      console.error("Error occurred during registration", error);
     }
   };
 
@@ -79,7 +73,7 @@ export default function LoginPage(props) {
               <Card>
                 <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Login</h4>
+                    <h4>Register</h4>
                   </CardHeader>
                   <CardBody>
                     <CustomInput
@@ -122,7 +116,7 @@ export default function LoginPage(props) {
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                     <Button type="submit" simple color="primary" size="lg">
-                      Login
+                      Register
                     </Button>
                   </CardFooter>
                 </form>

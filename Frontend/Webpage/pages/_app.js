@@ -3,6 +3,8 @@ import React from "react";
 import App from "next/app";
 import Head from "next/head";
 import "/styles/scss/nextjs-material-kit.scss?v=1.2.0";
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 export default class MyApp extends App {
 
@@ -19,6 +21,7 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
+      <Provider store={store}>
       <React.Fragment>
         <Head>
           <meta
@@ -29,6 +32,7 @@ export default class MyApp extends App {
         </Head>
         <Component {...pageProps} />
       </React.Fragment>
+      </Provider>
     );
   }
 }
