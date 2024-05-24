@@ -22,6 +22,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useRouter } from 'next/router';
+import ProtectedRoute from './ProtectedRoute';
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -55,6 +56,7 @@ const Chatbot = () => {
 
   return (
     <>
+    <ProtectedRoute>
       <CssBaseline />
       <AppBar position="static" sx={{ backgroundColor: '#2E3B55' }}>
         <Toolbar>
@@ -132,6 +134,7 @@ const Chatbot = () => {
           </Box>
         </Box>
       </Container>
+      </ProtectedRoute>
     </>
   );
 };
