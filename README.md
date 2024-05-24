@@ -57,6 +57,6 @@ TODO add workflow file and add explanation
 ### Docker Compose
 - Production docker compose
 ```sh
-docker compose up -f docker-compose-prd.yml --build -d
+docker compose -f docker-compose-prd.yml up --build -d
 ```
 TODO add compose file and explanation
