@@ -10,13 +10,25 @@ TODO: Frontend(next.js), Backend(Django), AI servers + Nginx, DB(MySQL)
 ### Server Setup
 #### Install Docker
 https://docs.docker.com/engine/install/ubuntu/
-#### Add enviroment file for secrets
-TODO add example
+#### Set up non-root user
+```
+# set up user
+sudo adduser <username>  # make user
+sudo usermod -aG docker <username>  # add user to docker group
+newgrp docker  # apply change
+
+# make ssh key
+su <username>
+ssh-keygen -t ed25519 -C "<name>"
+cat /home/<username>/.ssh/id_ed25519.pub /home/<username>/.ssh/authorized_keys  # add generated key to authorized keys
+
+# copy private key to github actions secrets
+cat /home/<username>/.ssh/id_ed25519  # copy output or use other method
+```
+
 #### Setup Github Actions
-- Build
-<br>On push build docker image and upload to AWS ECR
 - Deploy
-<br>After build login to server and pull new image
+<br> Clone/pull repository and run docker compose
 
 TODO add workflow file and add explanation
 
