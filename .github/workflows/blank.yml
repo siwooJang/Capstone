@@ -1,0 +1,25 @@
+name: Deploy to server
+
+on:
+  push:
+    branches: [ "main" ]
+  
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Execute SSH Commands
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd ./Capstone
+          git pull
+          docker compose -f docker-compose-prd.yml up --build -d
