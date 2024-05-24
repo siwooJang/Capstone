@@ -46,3 +46,6 @@ TODO add compose file and explanation
 DEBUG=False와,
 적절한 secret_key 값과,
 실제 서버의 이름을 allowed_hosts에 추가해야 한다.
+
+### Additional
+May need to chmod entrypoint.sh from outside of docker
