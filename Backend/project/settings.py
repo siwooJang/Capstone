@@ -28,10 +28,15 @@ DEBUG = bool(os.getenv("DEBUG",False))
 
 ALLOWED_HOSTS = (os.getenv('ALLOWED_HOSTS').split(';') if os.getenv('ALLOWED_HOSTS') else [])
 
+
 USE_X_FORWARDED_HOST=True 
 
 AI_HOST='flask'
 AI_PORT=5000
+
+if ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(AI_HOST)
+
 
 # Application definition
 
