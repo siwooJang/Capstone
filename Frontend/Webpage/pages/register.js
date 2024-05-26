@@ -22,6 +22,7 @@ import CardFooter from "/components/Card/CardFooter.js";
 import CustomInput from "/components/CustomInput/CustomInput.js";
 
 import styles from "/styles/jss/nextjs-material-kit/pages/loginPage.js";
+import NoAuthRoute from './NoAuthRoute';
 
 const useStyles = makeStyles(styles);
 
@@ -29,8 +30,7 @@ export default function RegisterPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const router = useRouter();
-
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, setError } = useForm();
 
   const onSubmit = async (data) => {
     try {
@@ -47,10 +47,21 @@ export default function RegisterPage(props) {
       }
     } catch (error) {
       console.error("Error occurred during registration", error);
+      if (error.response && error.response.data) {
+        console.log(error.response.data); // 서버에서 반환된 오류 메시지를 출력
+        if (error.response.data.username) {
+          setError("name", {
+            type: "manual",
+            message: error.response.data.username[0],
+          });
+        }
+      }
     }
   };
 
   return (
+    <>
+    <NoAuthRoute>
     <div>
       <Header
         absolute
@@ -77,8 +88,8 @@ export default function RegisterPage(props) {
                   </CardHeader>
                   <CardBody>
                     <CustomInput
-                      labelText="Name"
-                      id="name"
+                      labelText="Username"
+                      id="username"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -89,13 +100,13 @@ export default function RegisterPage(props) {
                             <People className={classes.inputIconsColor} />
                           </InputAdornment>
                         ),
-                        ...register("name", { required: true })
+                        ...register("name", { required: "Username is required" })
                       }}
                     />
-                    {errors.name && <span>This field is required</span>}
+                    {errors.name && <span style={{ color: 'red' }}>{errors.name.message}</span>}
                     <CustomInput
                       labelText="Password"
-                      id="pass"
+                      id="password"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -109,10 +120,10 @@ export default function RegisterPage(props) {
                           </InputAdornment>
                         ),
                         autoComplete: "off",
-                        ...register("password", { required: true })
+                        ...register("password", { required: "Password is required" })
                       }}
                     />
-                    {errors.password && <span>This field is required</span>}
+                    {errors.password && <span style={{ color: 'red' }}>{errors.password.message}</span>}
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                     <Button type="submit" simple color="primary" size="lg">
@@ -127,5 +138,7 @@ export default function RegisterPage(props) {
         <Footer whiteFont />
       </div>
     </div>
+    </NoAuthRoute>
+    </>
   );
 }
