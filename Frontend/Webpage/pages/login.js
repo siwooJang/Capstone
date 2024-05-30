@@ -24,6 +24,8 @@ import CardFooter from "/components/Card/CardFooter.js";
 import CustomInput from "/components/CustomInput/CustomInput.js";
 
 import styles from "/styles/jss/nextjs-material-kit/pages/loginPage.js";
+import NoAuthRoute from './NoAuthRoute';
+
 
 const useStyles = makeStyles(styles);
 
@@ -57,6 +59,8 @@ export default function LoginPage(props) {
   };
 
   return (
+    <>
+    <NoAuthRoute>
     <div>
       <Header
         absolute
@@ -133,5 +137,7 @@ export default function LoginPage(props) {
         <Footer whiteFont />
       </div>
     </div>
+    </NoAuthRoute>
+    </>
   );
 }
