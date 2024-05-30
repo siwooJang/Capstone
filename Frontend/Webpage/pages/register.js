@@ -30,8 +30,9 @@ export default function RegisterPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const router = useRouter();
-  const { register, handleSubmit, formState: { errors }, setError } = useForm();
-
+  const { register, handleSubmit, watch,formState: { errors }, setError } = useForm();
+  const password = watch("password");
+  
   const onSubmit = async (data) => {
     try {
       const response = await axiosInstance.post("/user/signup/", {
@@ -82,55 +83,79 @@ export default function RegisterPage(props) {
           <GridContainer justify="center">
             <GridItem xs={12} sm={6} md={4}>
               <Card>
-                <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-                  <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Register</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <CustomInput
-                      labelText="Username"
-                      id="username"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <People className={classes.inputIconsColor} />
-                          </InputAdornment>
-                        ),
-                        ...register("name", { required: "Username is required" })
-                      }}
-                    />
-                    {errors.name && <span style={{ color: 'red' }}>{errors.name.message}</span>}
-                    <CustomInput
-                      labelText="Password"
-                      id="password"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "password",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <Icon className={classes.inputIconsColor}>
-                              lock_outline
-                            </Icon>
-                          </InputAdornment>
-                        ),
-                        autoComplete: "off",
-                        ...register("password", { required: "Password is required" })
-                      }}
-                    />
-                    {errors.password && <span style={{ color: 'red' }}>{errors.password.message}</span>}
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button type="submit" simple color="primary" size="lg">
-                      Register
-                    </Button>
-                  </CardFooter>
-                </form>
+              <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+                    <CardHeader color="primary" className={classes.cardHeader}>
+                      <h4>Register</h4>
+                    </CardHeader>
+                    <CardBody>
+                      <CustomInput
+                        labelText="Username"
+                        id="name"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          type: "text",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <People className={classes.inputIconsColor} />
+                            </InputAdornment>
+                          ),
+                          ...register('name', { required: true })
+                        }}
+                      />
+                      {errors.name && <span>This field is required</span>}
+                      <CustomInput
+                        labelText="Password"
+                        id="password"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          type: "password",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <Icon className={classes.inputIconsColor}>
+                                lock_outline
+                              </Icon>
+                            </InputAdornment>
+                          ),
+                          autoComplete: "off",
+                          ...register('password', { required: true })
+                        }}
+                      />
+                      {errors.password && <span>This field is required</span>}
+                      <CustomInput
+                        labelText="Confirm Password"
+                        id="passwordVerification"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          type: "password",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <Icon className={classes.inputIconsColor}>
+                                lock_outline
+                              </Icon>
+                            </InputAdornment>
+                          ),
+                          autoComplete: "off",
+                          ...register('passwordVerification', {
+                            required: true,
+                            validate: value =>
+                              value === password || "The passwords do not match"
+                          })
+                        }}
+                      />
+                      {errors.passwordVerification && <span>{errors.passwordVerification.message}</span>}
+                    </CardBody>
+                    <CardFooter className={classes.cardFooter}>
+                      <Button simple color="primary" size="lg" type="submit">
+                        Register
+                      </Button>
+                    </CardFooter>
+                  </form>
               </Card>
             </GridItem>
           </GridContainer>

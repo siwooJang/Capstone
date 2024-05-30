@@ -25,6 +25,7 @@ import CustomInput from "/components/CustomInput/CustomInput.js";
 
 import styles from "/styles/jss/nextjs-material-kit/pages/loginPage.js";
 import NoAuthRoute from './NoAuthRoute';
+import { login } from './slices/authSlice';
 
 
 const useStyles = makeStyles(styles);
@@ -48,8 +49,9 @@ export default function LoginPage(props) {
         const { access, refresh } = response.data;
         sessionStorage.setItem("accessToken", access);
         sessionStorage.setItem("refreshToken", refresh);
-        dispatch(loginSuccess({ username: data.name }));
-        router.push('/chatbot'); // Redirect to chatbot or any protected route
+
+        dispatch(login());
+        router.push('/diary'); 
       } else {
         console.error("Login failed");
       }

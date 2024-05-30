@@ -1,16 +1,17 @@
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 const NoAuthRoute = ({ children }) => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/chatbot'); // Redirect to a protected route
+    const token = sessionStorage.getItem('accessToken');
+    setIsAuthenticated(!!token);
+    if (token) {
+      router.push('/'); // 로그인된 상태에서 접근하면 메인 페이지로 리디렉션
     }
-  }, [isAuthenticated, router]);
+  }, [router]);
 
   if (isAuthenticated) {
     return null; // or a loading spinner
