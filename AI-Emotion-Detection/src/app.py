@@ -30,12 +30,12 @@ def process_data(text, diary):
     
     post_data = {
         'diary': diary,
-        'anger': result[0],
-        'sadness': result[1],
-        'anxiety': result[2],
-        'hurt': result[3],
-        'panic': result[4],
-        'happiness': result[5]
+        'anger': result[1],
+        'sadness': result[2],
+        'anxiety': result[3],
+        'hurt': result[4],
+        'panic': result[5],
+        'happiness': result[6]
     }
     
     # TODO test connection
