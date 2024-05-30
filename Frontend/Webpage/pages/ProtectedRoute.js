@@ -1,19 +1,26 @@
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { login } from './slices/authSlice';
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    const token = sessionStorage.getItem('accessToken');
+    if (token) {
+      dispatch(login());
+      setIsReady(true);
+    } else {
       router.push('/login');
     }
-  }, [isAuthenticated, router]);
+  }, [dispatch, router]);
 
-  if (!isAuthenticated) {
-    return null; // or a loading spinner
+  if (!isReady) {
+    return (<h1>Loading...</h1>);
   }
 
   return children;
