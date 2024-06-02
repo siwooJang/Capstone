@@ -16,16 +16,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 import os
-import json
-import dotenv
 
-# dotenv.load_dotenv()
 
-#with open(os.environ['DJANGO_SETTING_FILE'],encoding='utf8') as f:
-#    SETTING_JSON=json.load(f)
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY=os.getenv('DJANGO_SECRET_KEY') #SETTING_JSON['SECRET_KEY']
@@ -36,10 +28,15 @@ DEBUG = bool(os.getenv("DEBUG",False))
 
 ALLOWED_HOSTS = (os.getenv('ALLOWED_HOSTS').split(';') if os.getenv('ALLOWED_HOSTS') else [])
 
+
 USE_X_FORWARDED_HOST=True 
 
 AI_HOST='flask'
 AI_PORT=5000
+
+if ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(AI_HOST)
+
 
 # Application definition
 

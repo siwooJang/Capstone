@@ -1,10 +1,14 @@
 import React from "react";
+import { useForm } from "react-hook-form";
+import axiosInstance from "./axiosInstance";
+import { useRouter } from "next/router";
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from './slices/authSlice';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import Email from "@material-ui/icons/Email";
 import People from "@material-ui/icons/People";
 // core components
 import Header from "/components/Header/Header.js";
@@ -20,17 +24,45 @@ import CardFooter from "/components/Card/CardFooter.js";
 import CustomInput from "/components/CustomInput/CustomInput.js";
 
 import styles from "/styles/jss/nextjs-material-kit/pages/loginPage.js";
+import NoAuthRoute from './NoAuthRoute';
+import { login } from './slices/authSlice';
+
 
 const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
-  const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
-  setTimeout(function () {
-    setCardAnimation("");
-  }, 700);
   const classes = useStyles();
   const { ...rest } = props;
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await axiosInstance.post("/user/", {
+        username: data.name,
+        password: data.password
+      });
+
+      if (response.status === 200) {
+        const { access, refresh } = response.data;
+        sessionStorage.setItem("accessToken", access);
+        sessionStorage.setItem("refreshToken", refresh);
+
+        dispatch(login());
+        router.push('/diary'); 
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error occurred during login", error);
+    }
+  };
+
   return (
+    <>
+    <NoAuthRoute>
     <div>
       <Header
         absolute
@@ -50,45 +82,15 @@ export default function LoginPage(props) {
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={6} md={4}>
-              <Card className={classes[cardAnimaton]}>
-                <form className={classes.form}>
+              <Card>
+                <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h4>Login</h4>
-                    <div className={classes.socialLine}>
-                      <Button
-                        justIcon
-                        href="#pablo"
-                        target="_blank"
-                        color="transparent"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className={"fab fa-twitter"} />
-                      </Button>
-                      <Button
-                        justIcon
-                        href="#pablo"
-                        target="_blank"
-                        color="transparent"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className={"fab fa-facebook"} />
-                      </Button>
-                      <Button
-                        justIcon
-                        href="#pablo"
-                        target="_blank"
-                        color="transparent"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className={"fab fa-google-plus-g"} />
-                      </Button>
-                    </div>
                   </CardHeader>
-                  <p className={classes.divider}>Or Be Classical</p>
                   <CardBody>
                     <CustomInput
-                      labelText="First Name..."
-                      id="first"
+                      labelText="Name"
+                      id="name"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -98,24 +100,11 @@ export default function LoginPage(props) {
                           <InputAdornment position="end">
                             <People className={classes.inputIconsColor} />
                           </InputAdornment>
-                        )
+                        ),
+                        ...register("name", { required: true })
                       }}
                     />
-                    <CustomInput
-                      labelText="Email..."
-                      id="email"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "email",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <Email className={classes.inputIconsColor} />
-                          </InputAdornment>
-                        )
-                      }}
-                    />
+                    {errors.name && <span>This field is required</span>}
                     <CustomInput
                       labelText="Password"
                       id="pass"
@@ -131,13 +120,15 @@ export default function LoginPage(props) {
                             </Icon>
                           </InputAdornment>
                         ),
-                        autoComplete: "off"
+                        autoComplete: "off",
+                        ...register("password", { required: true })
                       }}
                     />
+                    {errors.password && <span>This field is required</span>}
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
-                      Get started
+                    <Button type="submit" simple color="primary" size="lg">
+                      Login
                     </Button>
                   </CardFooter>
                 </form>
@@ -148,5 +139,7 @@ export default function LoginPage(props) {
         <Footer whiteFont />
       </div>
     </div>
+    </NoAuthRoute>
+    </>
   );
 }
