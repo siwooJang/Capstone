@@ -135,9 +135,9 @@ const DiaryDetail = ({ id }) => {
                 분석 결과
               </Typography>
               <div className={classes.result}>
-                <Line data={emotionData} />
-                <Pie data={emotionData}/>
-                <Doughnut data={emotionData}/>
+                {emotions && <Pie data={emotionData} /> }
+                {emotions && <Doughnut data={emotionData} /> }
+                {emotions && <Line data={emotionData} /> }
               </div>
               <Link href="/mypage" passHref>
                 <Button variant="contained" color="primary">
