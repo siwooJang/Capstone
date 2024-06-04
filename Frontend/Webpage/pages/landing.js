@@ -58,7 +58,7 @@ export default function LandingPage(props) {
               <Button
                 color="danger"
                 size="lg"
-                href="./mypage"
+                href="./diary"
               >
                 
                 시작해보세요!

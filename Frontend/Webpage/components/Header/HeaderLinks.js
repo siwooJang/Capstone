@@ -23,13 +23,13 @@ export default function HeaderLinks(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // 여기서 로그인 상태를 확인합니다. 예를 들어, sessionStorage에 토큰이 있는지 확인할 수 있습니다.
+
     const token = sessionStorage.getItem("accessToken");
     setIsLoggedIn(!!token);
   }, []);
 
   const handleLogout = () => {
-    // 로그아웃 처리: 토큰 제거 등
+
     sessionStorage.removeItem("accessToken");
     sessionStorage.removeItem("refreshToken");
     dispatch(logout());
@@ -119,7 +119,7 @@ export default function HeaderLinks(props) {
             color="transparent"
             className={classes.navLink}
           >
-            <i className={classes.socialIcons + " fab fa-github"} />
+            <i className={classes.socialIcons + " fab fa-github"}>Github</i>
           </Button>
         </Tooltip>
       </ListItem>

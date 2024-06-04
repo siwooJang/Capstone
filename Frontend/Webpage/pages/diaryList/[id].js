@@ -1,5 +1,5 @@
+"use client"
 import React, { useEffect, useState } from "react";
-import dynamic from 'next/dynamic';
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
@@ -12,8 +12,10 @@ import Footer from "/components/Footer/Footer.js";
 import axiosInstance from "../axiosInstance";
 import styles from "/styles/jss/nextjs-material-kit/pages/loginPage.js";
 
-// Dynamic import for Chart.js components
-const Line = dynamic(() => import('react-chartjs-2').then(mod => mod.Line), { ssr: false });
+import { Chart } from "chart.js/auto"
+import { Line,Pie,Doughnut } from 'react-chartjs-2';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 const useStyles2 = makeStyles(styles);
 
 const DiaryDetail = ({ id }) => {
+
   const classes = useStyles();
   const classes2 = useStyles2();
   const [diary, setDiary] = useState(null);
@@ -59,6 +62,7 @@ const DiaryDetail = ({ id }) => {
       try {
         const response = await axiosInstance.get(`/diary/emotion/${id}`);
         setEmotions(response.data);
+        console.log("Emotions data:", response.data);  // 데이터 확인용
       } catch (error) {
         console.error("Error fetching diary emotions:", error);
       }
@@ -75,11 +79,28 @@ const DiaryDetail = ({ id }) => {
         label: 'Emotion Analysis',
         data: emotions ? Object.values(emotions) : [],
         fill: false,
-        backgroundColor: 'rgba(75,192,192,0.6)',
-        borderColor: 'rgba(75,192,192,1)',
+        backgroundColor: [
+          "rgb(255,99,132,0.2)",
+          "rgb(255,159,64,0.2)",
+          "rgb(255,205,86,0.2)",
+          "rgb(75,192,192,0.2)",
+          "rgb(54,162,235,0.2)",
+          "rgb(153,102,255,0.2)",
+        ],
+        borderColor: [
+          "rgb(255,99,132)",
+          "rgb(255,159,64)",
+          "rgb(255,205,86)",
+          "rgb(75,192,192)",
+          "rgb(54,162,235)",
+          "rgb(153,102,255)",
+        ],
+        borderWidth: 1,
       },
     ],
   };
+
+  console.log("Emotion Data for Chart:", emotionData);  // 데이터 확인용
 
   if (!diary) {
     return <div>다이어리를 찾을 수 없습니다.</div>;
@@ -114,7 +135,9 @@ const DiaryDetail = ({ id }) => {
                 분석 결과
               </Typography>
               <div className={classes.result}>
-                {emotions && <Line data={emotionData} />}
+                {emotions && <Pie data={emotionData} /> }
+                {emotions && <Doughnut data={emotionData} /> }
+                {emotions && <Line data={emotionData} /> }
               </div>
               <Link href="/mypage" passHref>
                 <Button variant="contained" color="primary">

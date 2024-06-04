@@ -41,7 +41,7 @@
     "@mui/material": "^5.15.17",
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.7.2",
-    "chart.js": "^2.9.4",
+    "chart.js": "^4.4.3",
     "classnames": "2.3.2",
     "moment": "2.29.4",
     "next": "12.2.5",
