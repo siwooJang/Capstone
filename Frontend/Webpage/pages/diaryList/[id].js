@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
@@ -42,55 +42,6 @@ const useStyles = makeStyles((theme) => ({
 const useStyles2 = makeStyles(styles);
 
 const DiaryDetail = ({ id }) => {
-
-  const chartRef = useRef(null)
-
-  useEffect(()=> {
-    if(chartRef.current){
-      if(chartRef.current.chart){
-        chartRef.current.chart.destroy();
-      }
-    
-
-    const context = chartRef.current.getContest("2d")
-
-    const newChart = new Chart(context, {
-      type: "doughnut",
-      data: {
-        labels: ['anger', 'sadness', 'anxiety', 'hurt', 'panic', 'happiness'],
-        datasets: [
-          {
-          data: [10,20,30,40,50,60],
-          backgroundColor: [
-            "rgb(255,99,132,0.2)",
-            "rgb(255,159,64,0.2)",
-            "rgb(255,205,86,0.2)",
-            "rgb(75,192,192,0.2)",
-            "rgb(54,162,235,0.2)",
-            "rgb(153,102,255,0.2)",
-          ],
-          borderColor: [
-            "rgb(255,99,132)",
-            "rgb(255,159,64)",
-            "rgb(255,205,86)",
-            "rgb(75,192,192)",
-            "rgb(54,162,235)",
-            "rgb(153,102,255)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-      },
-      options: {
-          responsive : true
-      },
-    });
-
-    chartRef.current.chart = newChart;
-  }
-  }, []);
-
-  
 
   const classes = useStyles();
   const classes2 = useStyles2();
@@ -184,9 +135,9 @@ const DiaryDetail = ({ id }) => {
                 분석 결과
               </Typography>
               <div className={classes.result}>
-                <Line data={emotionData} />
-                <Pie data={emotionData}/>
-                <Doughnut data={emotionData}/>
+                {emotions && <Pie data={emotionData} /> }
+                {emotions && <Doughnut data={emotionData} /> }
+                {emotions && <Line data={emotionData} /> }
               </div>
               <Link href="/mypage" passHref>
                 <Button variant="contained" color="primary">
