@@ -84,21 +84,16 @@ const DiaryDetail = ({ id }) => {
       tooltip: {
         callbacks: {
           label: function (context) {
-            let label = context.dataset.label || '';
+            let label = context.label || '';
             if (label) {
               label += ': ';
             }
-            if (context.parsed.y !== null) {
-              label += context.parsed.y;
+            if (context.raw !== null) {
+              label += context.raw.toFixed(2); // 소수점 두 자리까지 표시
             }
             return label;
           }
         }
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
       },
     },
   };
@@ -109,7 +104,7 @@ const DiaryDetail = ({ id }) => {
     datasets: [
       {
         label: 'Emotion Analysis',
-        data: emotions ? Object.values(emotions).map(val => val.toFixed(2)) : [],
+        data: emotions ? Object.values(emotions) : [],
         fill: false,
         backgroundColor: [
           "rgb(255,99,132,0.2)",
