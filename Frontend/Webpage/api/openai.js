@@ -8,24 +8,28 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const getChatGPTResponse = async ( conversationHistory, retries = 0) => {
   try {
-    console.log
+    const requestBody = {
+      model: 'gpt-3.5-turbo',
+      messages: [
+        { role: 'system', content: 'You are a friendly and empathetic assistant. Help the user reflect on their day and their emotions.' },
+        ...conversationHistory,
+      ],
+    };
+
+    // 요청 본문을 콘솔에 출력합니다.
+    console.log('Request Body:', JSON.stringify(requestBody, null, 2));
+
     const response = await axios.post(
       'https://api.openai.com/v1/chat/completions',
-      {
-        model: 'gpt-3.5-turbo', // 사용하려는 모델 버전을 지정합니다.
-        messages: [
-          { role: 'system', content: 'You are a friendly and empathetic assistant. Help the user reflect on their day and their emotions.' },
-          ...conversationHistory,
-        ],
-      },
+      requestBody,
       {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}`,
-          'Response-Format': 'text' // 반환 형식 지정 
+          Authorization: `Bearer ${API_KEY}`,
         },
       }
     );
+
     return response.data.choices[0].message.content;
   } catch (error) {
     if (error.response && error.response.status === 429 && retries < MAX_RETRIES) {
