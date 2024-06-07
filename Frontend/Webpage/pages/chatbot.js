@@ -23,8 +23,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useRouter } from 'next/router';
 import ProtectedRoute from './ProtectedRoute';
-import { getChatGPTResponse } from '../api/openai';  // Mock OpenAI API 함수 임포트
-import { saveJournal } from '../api/journal';  // Mock 일기 저장 함수 임포트
+import { getChatGPTResponse } from '../api/openai';  // 실제 OpenAI API 함수 임포트
+import { saveJournal } from '../api/journal';  // 실제 일기 저장 함수 임포트
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -42,7 +42,7 @@ const Chatbot = () => {
       setInput('');
 
       try {
-        const botResponse = await getChatGPTResponse(input);
+        const botResponse = await getChatGPTResponse(messages);
         const botMessage = { text: botResponse, sender: 'bot' };
         setMessages((prevMessages) => [...prevMessages, botMessage]);
       } catch (error) {
@@ -54,7 +54,9 @@ const Chatbot = () => {
   const handleEndChat = async () => {
     const conversation = messages.map((msg) => `${msg.sender}: ${msg.text}`).join('\n');
     try {
-      const summary = await getChatGPTResponse(`요약: ${conversation}`);
+      const summary = await getChatGPTResponse(
+        [...messages,{sender:'user',text:'좋아, 이제 지금까지 했던 대화 내용을 내가 쓴 일기 형식으로 요약해줘.'}]
+        )
       
       const journal = {
         content: summary,

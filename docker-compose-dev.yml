@@ -2,7 +2,7 @@ services:
   backend:
     build:
       context: ./Backend
-    depends_on: 
+    depends_on:
       - mysql
     restart: unless-stopped
     env_file:
