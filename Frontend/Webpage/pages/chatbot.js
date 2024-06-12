@@ -23,8 +23,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useRouter } from 'next/router';
 import ProtectedRoute from './ProtectedRoute';
-import { getChatGPTResponse } from '../api/openai';  // Mock OpenAI API 함수 임포트
-import { saveJournal } from '../api/journal';  // Mock 일기 저장 함수 임포트
+import { getChatGPTResponse } from '../api/openai';  // 실제 OpenAI API 함수 임포트
+import { saveJournal } from '../api/journal';  // 실제 일기 저장 함수 임포트
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -36,14 +36,14 @@ const Chatbot = () => {
 
   const handleSendMessage = async () => {
     if (input.trim()) {
-      const userMessage = { text: input, sender: 'user' };
+      const userMessage = { content: input, role: 'user' };
       const updatedMessages = [...messages, userMessage];
       setMessages(updatedMessages);
       setInput('');
 
       try {
-        const botResponse = await getChatGPTResponse(input);
-        const botMessage = { text: botResponse, sender: 'bot' };
+        const botResponse = await getChatGPTResponse(updatedMessages);
+        const botMessage = { content: botResponse, role: 'assistant' };
         setMessages((prevMessages) => [...prevMessages, botMessage]);
       } catch (error) {
         console.error('Error fetching ChatGPT response:', error);
@@ -52,11 +52,13 @@ const Chatbot = () => {
   };
 
   const handleEndChat = async () => {
-    const conversation = messages.map((msg) => `${msg.sender}: ${msg.text}`).join('\n');
     try {
-      const summary = await getChatGPTResponse(`요약: ${conversation}`);
+      const userMessage = {role:'user',content:'좋아, 이제 지금까지 했던 대화 내용을 내가 쓴 일기 형식으로 요약해줘.'};
+      const updatedMessages = [...messages, userMessage];
+      const summary = await getChatGPTResponse(updatedMessages)
       
       const journal = {
+        title: 'Test',
         content: summary,
         date: new Date().toISOString(),
         // 추가적인 사용자 정보 등을 포함할 수 있습니다.
@@ -65,7 +67,7 @@ const Chatbot = () => {
       await saveJournal(journal);
       console.log('Journal saved successfully');
       
-      setMessages([{ text: '채팅이 끝났습니다. 이전 기록은 저장됩니다', sender: 'system' }]);
+      setMessages([{ content: '채팅이 끝났습니다. 이전 기록은 저장됩니다', role: 'system' }]);
     } catch (error) {
       console.error('Error summarizing conversation or saving journal:', error);
     }
@@ -133,12 +135,12 @@ const Chatbot = () => {
           >
             <List sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
               {messages.map((message, index) => (
-                <ListItem key={index} sx={{ textAlign: message.sender === 'user' ? 'right' : 'left' }}>
+                <ListItem key={index} sx={{ textAlign: message.role === 'user' ? 'right' : 'left' }}>
                   <ListItemText
-                    primary={message.text}
-                    secondary={message.sender === 'user' ? 'You' : message.sender === 'bot' ? 'AI' : 'System'}
+                    primary={message.content}
+                    secondary={message.role === 'user' ? 'You' : message.role === 'assistant' ? 'AI' : 'System'}
                     sx={{
-                      backgroundColor: message.sender === 'user' ? '#BBDEFB' : message.sender === 'bot' ? '#C8E6C9' : '#FFD54F',
+                      backgroundColor: message.role === 'user' ? '#BBDEFB' : message.role === 'assistant' ? '#C8E6C9' : '#FFD54F',
                       borderRadius: '8px',
                       padding: '8px 16px',
                       display: 'inline-block',

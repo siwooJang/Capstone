@@ -11,9 +11,8 @@ import HeaderLinks from "/components/Header/HeaderLinks.js";
 import Footer from "/components/Footer/Footer.js";
 import axiosInstance from "../axiosInstance";
 import styles from "/styles/jss/nextjs-material-kit/pages/loginPage.js";
-
 import { Chart } from "chart.js/auto"
-import { Line,Pie,Doughnut } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
 
 
@@ -40,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const useStyles2 = makeStyles(styles);
+
+
 
 const DiaryDetail = ({ id }) => {
 
@@ -71,6 +72,32 @@ const DiaryDetail = ({ id }) => {
     fetchDiary();
     fetchEmotions();
   }, [id]);
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            let label = context.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.raw !== null) {
+              label += context.raw.toFixed(2); // 소수점 두 자리까지 표시
+            }
+            return label;
+          }
+        }
+      },
+    },
+  };
+
 
   const emotionData = {
     labels: emotions ? Object.keys(emotions) : [],
@@ -134,10 +161,8 @@ const DiaryDetail = ({ id }) => {
               <Typography variant="subtitle1" color="textSecondary">
                 분석 결과
               </Typography>
-              <div className={classes.result}>
-                {emotions && <Pie data={emotionData} /> }
-                {emotions && <Doughnut data={emotionData} /> }
-                {emotions && <Line data={emotionData} /> }
+              <div className={classes.result} style={{ height: '400px' }}>
+                {emotions && <Pie data={emotionData} options={options} />}
               </div>
               <Link href="/mypage" passHref>
                 <Button variant="contained" color="primary">
