@@ -19,4 +19,4 @@ jobs:
         script: |
           cd ./Capstone
           git pull
-          docker compose -f docker-compose-prd.yml up --build -d
+          docker compose -f docker-compose-prd.yml down && docker compose -f docker-compose-prd.yml up --build -d
