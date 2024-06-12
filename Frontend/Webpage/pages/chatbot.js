@@ -53,7 +53,7 @@ const Chatbot = () => {
 
   const handleEndChat = async () => {
     try {
-      const userMessage = {role:'user',content:'좋아, 이제 지금까지 했던 대화 내용을 내가 쓴 일기 형식으로 요약해줘. 제목은 붙이지 마. 최대한 그날에 있었던 내용 위주로 일기를 작성해줘.'};
+      const userMessage = {role:'user',content:'좋아, 이제 지금까지 했던 대화 내용을 내가 쓴 일기 형식으로 요약해줘. 제목은 붙이지 마. 최대한 그날에 있었던 내용 위주로 일기를 작성해줘. 일기를 요약할때 상담가가 말해주는 긍정적인 내용 위주로 요약하지 말고, 사용자가 실제로 슬픔을 느낀 부분, 고통을 느낀 부분 위주로 요약해줘. 긍정의 감정을 좀 낮춰줘.'};
       const updatedMessages = [...messages, userMessage];
       const summary = await getChatGPTResponse(updatedMessages)
       
