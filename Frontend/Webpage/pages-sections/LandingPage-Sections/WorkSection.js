@@ -59,7 +59,7 @@ export default function WorkSection() {
                 }}
               />
               <GridItem xs={12} sm={12} md={4} className={classes.textCenter}>
-                <Button color="primary" href='/mypage'>AI 감정 분석 기능이 시작됩니다</Button>
+                <Button color="primary" href='/diary'>AI 감정 분석 기능이 시작됩니다</Button>
               </GridItem>
             </GridContainer>
           </form>
