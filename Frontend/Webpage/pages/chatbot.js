@@ -53,12 +53,12 @@ const Chatbot = () => {
 
   const handleEndChat = async () => {
     try {
-      const userMessage = {role:'user',content:'좋아, 이제 지금까지 했던 대화 내용을 내가 쓴 일기 형식으로 요약해줘.'};
+      const userMessage = {role:'user',content:'좋아, 이제 지금까지 했던 대화 내용을 내가 쓴 일기 형식으로 요약해줘. 제목은 붙이지 마. 최대한 그날에 있었던 내용 위주로 일기를 작성해줘.'};
       const updatedMessages = [...messages, userMessage];
       const summary = await getChatGPTResponse(updatedMessages)
       
       const journal = {
-        title: 'Test',
+        title: new Date().toISOString().substring(0, 10),
         content: summary,
         date: new Date().toISOString(),
         // 추가적인 사용자 정보 등을 포함할 수 있습니다.
