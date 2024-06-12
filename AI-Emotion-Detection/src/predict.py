@@ -203,6 +203,7 @@ def predict(text, pred_config):
 
     # Return output
     # TODO Process preds as neccesary
+    logger.info(preds)
     return preds.mean(axis=0).astype(float)
     
 
