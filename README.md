@@ -2,11 +2,11 @@
 2024_1 캡스톤 프로젝트
 
 ## Team
-TODO
 
 ## Server
 ### Diagram
-TODO: Frontend(next.js), Backend(Django), AI servers + Nginx, DB(MySQL)
+![Picture1](https://github.com/ScobraCK/Capstone/assets/93692827/7cf86c49-6fc0-4030-8ff8-6c653dc98d94)
+
 ### Server Setup
 #### Install Docker
 https://docs.docker.com/engine/install/ubuntu/
@@ -48,15 +48,3 @@ Also need to make a .env file with EMAIL=<your-email> for certbot
 #### Additional
 May need to chmod +x entrypoint.sh manually from outside of docker
 
-### Setup Github Actions
-- Deploy
-<br> Clone/pull repository and run docker compose
-
-TODO add workflow file and add explanation
-
-### Docker Compose
-- Production docker compose
-```sh
-docker compose -f docker-compose-prd.yml up --build -d
-```
-TODO add compose file and explanation
