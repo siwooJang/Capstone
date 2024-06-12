@@ -58,7 +58,7 @@ const Chatbot = () => {
       const summary = await getChatGPTResponse(updatedMessages)
       
       const journal = {
-        title: 'Test',
+        title: new Date().toISOString(),
         content: summary,
         date: new Date().toISOString(),
         // 추가적인 사용자 정보 등을 포함할 수 있습니다.
