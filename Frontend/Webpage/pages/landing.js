@@ -60,7 +60,6 @@ export default function LandingPage(props) {
                 size="lg"
                 href="./diary"
               >
-                
                 시작해보세요!
               </Button>
             </GridItem>
