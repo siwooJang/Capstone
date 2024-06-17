@@ -3,6 +3,25 @@
 
 ## Team
 
+![image](https://github.com/siwooJang/Capstone/assets/88125431/00381857-b014-4290-bdf7-5dbcd68b251d)
+
+
+### 시연 영상 ( 로그인 / 회원가입 / 일기 작성 )
+
+
+
+https://github.com/siwooJang/Capstone/assets/88125431/8263e698-f9db-458a-9f0b-d80f38483241
+
+
+
+### 시연 영상 ( 챗봇 )
+
+
+
+https://github.com/siwooJang/Capstone/assets/88125431/076699c7-dd60-4370-a3bf-ffe8de0fe77a
+
+
+
 ## Server
 ### Diagram
 ![Picture1](https://github.com/ScobraCK/Capstone/assets/93692827/7cf86c49-6fc0-4030-8ff8-6c653dc98d94)
