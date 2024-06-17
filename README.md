@@ -1,6 +1,10 @@
 # Capstone
 2024_1 캡스톤 프로젝트
 
+## 시연 사이트
+
+### http://deer-diary.duckdns.org
+
 ## Team
 
 ![image](https://github.com/siwooJang/Capstone/assets/88125431/00381857-b014-4290-bdf7-5dbcd68b251d)
